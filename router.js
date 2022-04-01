@@ -9,7 +9,7 @@ const fileFilter = require("./middlewares/uploadFile")
 const { Storage } = require("@google-cloud/storage");
 const req = require("express/lib/request");
 const router = express.Router();
-
+const multer = require('multer')
 
 
 router.get('/', asyncMiddleware, function (req, res) {
@@ -141,7 +141,9 @@ router.post('/split', asyncMiddleware, function (req, res) {
 // listBuckets();
 
 
-router.post("/upload", storageConfig.single('img'), fileFilter, (req, res) => {
+router.use(multer({ storage: storageConfig, fileFilter: fileFilter }).single("img"));
+
+router.post("/upload", (req, res) => {
     if (!req.file) res.send("Ошибка при загрузке файла");
     else {
         // console.log(req.file)
