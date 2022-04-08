@@ -4,7 +4,7 @@ const resData = (res, data) => {
         "ok": true,
         "data": data
     });
-    res.set('Access-Control-Allow-Origin', '*')
+    res.set('Access-Control-Allow-Origin', '*');
     res.send(responseData);
     return true;
 };

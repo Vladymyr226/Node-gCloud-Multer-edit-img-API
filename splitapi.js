@@ -7,14 +7,14 @@ const router = require('./router');
 bodyParser = require('body-parser');
 httpServer.use(bodyParser.json({}));
 
-Promise.timeout = function (timeout, promise) {
-    return Promise.race([
-        promise,
-        new Promise(function (resolve, reject) {
-            setTimeout(function () { reject('Timed out'); }, timeout);
-        })
-    ]);
-}
+// Promise.timeout = function (timeout, promise) {
+//     return Promise.race([
+//         promise,
+//         new Promise(function (resolve, reject) {
+//             setTimeout(function () { reject('Timed out'); }, timeout);
+//         })
+//     ]);
+// }
 
 httpServer.use('/', router);
 

@@ -6,7 +6,7 @@ const resError = (res, errorCode, errorMessage) => {
         "code": errorCode,
         "message": errorMessage
     });
-    res.set('Access-Control-Allow-Origin', '*')
+    res.set('Access-Control-Allow-Origin', '*');
     res.send(responseData);
     return true;
 };

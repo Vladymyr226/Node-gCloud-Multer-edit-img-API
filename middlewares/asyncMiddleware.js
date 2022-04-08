@@ -1,4 +1,4 @@
-const error = require('../handlers/errorHandler.js')
+const error = require('../handlers/errorHandler.js');
 
 const asyncMiddleware = (req, res, next) => {
     if (typeof (req.query.apiKey) !== "string") {
@@ -7,7 +7,7 @@ const asyncMiddleware = (req, res, next) => {
         return error(res, "403", "Wrong key!!");
     } else {
         // Promise.resolve(fn(req, res, next)).catch(next);
-        return next()
+        return next();
     }
 };
 
