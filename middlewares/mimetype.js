@@ -8,19 +8,21 @@ const getMimeFromPath = (filePath) => {
 
 const getMimetype = (req, res, next) => {
 
-    console.log("arrayOfPathes\t", req.arrayOfPathes)
+    // console.log("arrayOfPathes\t", req.arrayOfPathes, "\n")
 
     req.arrayOfPathes.map((item, index) => {
+
+        // console.log("item: ", item)
 
         let tmp = getMimeFromPath(req.arrayOfPathes[index])
         let arr = tmp.split('/')[1]
 
-        console.log(arr)
+        //console.log("ext\t", arr)
 
-        // fs.rename(item, item + `.${arr}`, (err) => {
-        //     if (err) throw err;
-        //     console.log('Rename complete!');
-        // });
+        fs.rename(item, item + `.${arr}`, (err) => {
+            if (err) throw err;
+            // console.log('Rename complete!');
+        });
     })
 
     next();

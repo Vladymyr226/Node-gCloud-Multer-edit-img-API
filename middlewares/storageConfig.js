@@ -2,9 +2,15 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 
 const downloadFileFromUrl = async (url, path) => {
-    return fetch(url).then(async res => {
-        await res.body.pipe(fs.createWriteStream(path));
+    const res = await fetch(url);
+    res.body.pipe(fs.createWriteStream(path));
+    return new Promise((resolve) => {
+        res.body.on('end', resolve);
     })
+
+    // return fetch(url).then(async res => {
+    //     await res.body.pipe(fs.createWriteStream(path));
+    // })
 }
 
 const storageConfig = async (req, res, next) => {
@@ -23,7 +29,6 @@ const storageConfig = async (req, res, next) => {
     }
     req.arrayOfPathes = arrayOfPathes;
     next();
-
 }
 
 module.exports = storageConfig;
