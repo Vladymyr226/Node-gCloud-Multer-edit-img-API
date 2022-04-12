@@ -1,31 +1,32 @@
 const execSync = require("child_process").execSync;
-const fs = require("fs")
+const fs = require("fs");
 
 const getMimeFromPath = (filePath) => {
-    const mimeType = execSync('file --mime-type -b "' + filePath + '"').toString();
-    return mimeType.trim();
+  const mimeType = execSync('file --mime-type -b "' + filePath + '"').toString();
+  return mimeType.trim()
 }
 
 const getMimetype = (req, res, next) => {
+  // console.log("arrayOfPathes\t", req.arrayOfPathes, "\n")
 
-    // console.log("arrayOfPathes\t", req.arrayOfPathes, "\n")
+  req.arrayWithTypes = [];
 
-    req.arrayOfPathes.map((item, index) => {
+  req.arrayOfPathes.map((item, index) => {
+    // console.log("item: ", item)
 
-        // console.log("item: ", item)
+    let tmp = getMimeFromPath(req.arrayOfPathes[index]);
+    let arr = tmp.split("/")[1];
 
-        let tmp = getMimeFromPath(req.arrayOfPathes[index])
-        let arr = tmp.split('/')[1]
+    //console.log("ext\t", arr)
+    req.arrayWithTypes[index] = arr;
 
-        //console.log("ext\t", arr)
-
-        fs.rename(item, item + `.${arr}`, (err) => {
-            if (err) throw err;
-            // console.log('Rename complete!');
-        });
+    fs.rename(item, item + `.${arr}`, (err) => {
+      if (err) throw err
+      // console.log('Rename complete!');
     })
+  })
 
-    next();
+  next()
 }
 
-module.exports = getMimetype;
+module.exports = getMimetype

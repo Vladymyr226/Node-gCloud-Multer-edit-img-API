@@ -4,7 +4,6 @@ const resData = require("./handlers/responseHandler");
 const storageConfig = require("./middlewares/storageConfig");
 const asyncMiddleware = require("./middlewares/asyncMiddleware");
 const imgResize = require('./middlewares/resizeImages');
-const saveFileToStorage = require("./middlewares/saveToGCloudStorage");
 const getMimeFromPath = require("./middlewares/mimetype");
 
 // const bodyParser = require("body-parser");
@@ -26,7 +25,8 @@ router.get('/favicon.ico', function (req, res) {
     res.status(204).send({});
 });
 
-router.post("/upload", storageConfig, getMimeFromPath, imgResize, saveFileToStorage, (req, res) => {
+router.post("/upload", storageConfig, getMimeFromPath, imgResize, (req, res) => {
+    // console.log(req); 
     if (!req.body.url) res.send("Вы не выбрали данные для загрузки!");
     else return res.status(200).send("Файл загружен");
 });

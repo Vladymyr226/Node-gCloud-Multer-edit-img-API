@@ -16,12 +16,15 @@ const downloadFileFromUrl = async (url, path) => {
 const storageConfig = async (req, res, next) => {
 
     const arrayOfPathes = [];
-
+    
     for (let i = 0; i < req.body.length; i++) {
 
-        const fileName = `./images/${i}`;
+        nameFileWithImagePath = req.body[i].imagePath
+        const bebra = nameFileWithImagePath.split('/')[2]
+        console.log("nameFileWithImagePath", bebra)
 
-        await downloadFileFromUrl(req.body[i].url, fileName)
+        const fileName = `./images/${bebra}`;
+       await downloadFileFromUrl(req.body[i].url, fileName)
             .then(() => {
                 arrayOfPathes.push(fileName);
             })
